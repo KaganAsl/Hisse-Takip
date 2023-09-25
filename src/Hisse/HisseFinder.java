@@ -1,6 +1,7 @@
 package Hisse;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,11 +18,11 @@ public class HisseFinder {
 				String hisseName = element.select("li:nth-child(1) > a:nth-child(2)").text();
 				
 				if (hisseName.equals(name)) {
-					double price = Double.parseDouble(element.select("#h_td_fiyat_id_" + name).text().replace(',', '.')); 
-					double yesterdayPrice = Double.parseDouble(element.select("#h_td_dunkapanis_id_" + name).text().replace(',', '.'));
-					double change = Double.parseDouble(element.select("#h_td_yuzde_id_" + name).text().replace(',', '.'));
-					double tavan = Double.parseDouble(element.select("#h_td_tavan_id_" + name).text().replace(',', '.'));
-					double taban = Double.parseDouble(element.select("#h_td_taban_id_" + name).text().replace(',', '.'));
+					double price = Double.parseDouble(element.select("#h_td_fiyat_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.')); 
+					double yesterdayPrice = Double.parseDouble(element.select("#h_td_dunkapanis_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.'));
+					double change = Double.parseDouble(element.select("#h_td_yuzde_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.'));
+					double tavan = Double.parseDouble(element.select("#h_td_tavan_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.'));
+					double taban = Double.parseDouble(element.select("#h_td_taban_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.'));
 					return new Hisse(name, price, yesterdayPrice, change, tavan, taban);
 				}
 			}
@@ -39,11 +40,11 @@ public class HisseFinder {
 				String hisseName = element.select("li:nth-child(1) > a:nth-child(2)").text();
 				
 				if (hisseName.equals(name)) {
-					hisse.setPrice(Double.parseDouble(element.select("#h_td_fiyat_id_" + name).text().replace(',', '.')));
-					hisse.setYesterdaysPrice(Double.parseDouble(element.select("#h_td_dunkapanis_id_" + name).text().replace(',', '.')));
-					hisse.setChange(Double.parseDouble(element.select("#h_td_yuzde_id_" + name).text().replace(',', '.')));
-					hisse.setTavan(Double.parseDouble(element.select("#h_td_tavan_id_" + name).text().replace(',', '.')));
-					hisse.setTaban(Double.parseDouble(element.select("#h_td_taban_id_" + name).text().replace(',', '.')));
+					hisse.setPrice(Double.parseDouble(element.select("#h_td_fiyat_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.')));
+					hisse.setYesterdaysPrice(Double.parseDouble(element.select("#h_td_dunkapanis_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.')));
+					hisse.setChange(Double.parseDouble(element.select("#h_td_yuzde_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.')));
+					hisse.setTavan(Double.parseDouble(element.select("#h_td_tavan_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.')));
+					hisse.setTaban(Double.parseDouble(element.select("#h_td_taban_id_" + name).text().replaceAll(Pattern.quote("."), "").replace(',', '.')));
 				}
 			}
 		} catch (Exception e) {
